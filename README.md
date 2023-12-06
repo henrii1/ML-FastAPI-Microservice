@@ -18,7 +18,7 @@ This repository contains a fully-fledged machine learning-based microservice bui
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/your-username/fastapi-ml-microservice.git
+    git clone https://github.com/henrii1/fastapi-ml-microservice.git
     cd fastapi-ml-microservice
     ```
 
