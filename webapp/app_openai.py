@@ -1,54 +1,46 @@
 import os
-from openai import OpenAI
-"""
-References for using openai_api:
-    building code: https://platform.openai.com/docs/guides/code/introduction
-
-"""
-# This code is for v1 of the openai package: pypi.org/project/openai
-
-client = OpenAI()
+import openai
 
 
-def submit_question(text: str):
-    """This submits a question to OpenAI API"""
-    api_key = os.getenv('OPENAI_API_KEY')
-    response = client.chat.completions.create(
-    model="gpt-3.5-turbo",
-    messages=[
-    {"role": "system", "content": "You are a helpful assistant."},
-            {"role": "user", "content": f"{text}"},
-    ],
-    temperature=0.5,
-    max_tokens=64,
-    top_p=1
-    )["choices"][0]["text"].strip("\n")
 
-    # result = openai.Completion.create(
-    #     prompt= prompt,
-    #     temperature = 0,
-    #     max_tokens = 300,
-    #     top_p = 1,
-    #     frequency_penalty = 0,
-    #     presence_penalty = 0,
-    #     model = "text-davinci-002",
+def submit_question(text):
+    """This submits a question to the OpenAI API"""
 
-    # )["choices"][0]["text"].strip("\n")
-    return response
+    openai.api_key = os.getenv("OPENAI_API_KEY")
+    prompt = text
+
+    result = openai.Completion.create(
+        prompt=prompt,
+        temperature=0,
+        max_tokens=300,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0,
+        model="text-davinci-002",
+    )["choices"][0]["text"].strip(" \n")
+    return result
 
 
-# # a function that converts text to python code.
-# def create_code(text: str, language = "Python3"):
-#     """ submits a prompt to openAI for code generation"""
-#     completion = openai.ChatCompletion.create(
-#         model = "gpt-3.5-turbo",
-#         messages = [
-#             {"role": "system", "content": "You are a helpful assistant."},
-#             {"role": "user", "content": f"{text} using {language}."},
-#         ]
-#     )
+# build a function that converts a comment into code in any language
+def create_code(text, language: str="#python3"):
+    """This submits a comment to the OpenAI API to create code in any languag
 
-#     result = completion.choices[0].message["content"]
-#     print(result)
-    
-#     return result
+    Example:
+        language = '# Python3'
+        text = f"Calculate the mean distance between an array of points"
+        create_code(text, language)
+
+    """
+    openai.api_key = os.getenv("OPENAI_API_KEY")
+    prompt = f"## {language}\n\n{text}"
+
+    result = openai.Completion.create(
+        prompt=prompt,
+        temperature=0,
+        max_tokens=300,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0,
+        model="davinci-codex",
+    )["choices"][0]["text"].strip(" \n")
+    return result

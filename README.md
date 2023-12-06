@@ -32,13 +32,16 @@ This repository contains a fully-fledged machine learning-based microservice bui
     ```bash
     pip install -r requirements.txt
     ```
-
-4. Run the FastAPI application:
+4. Run the streamlit app:
+   ```
+   streamlit run webapp/app_streamlit.py
+   ```
+5. Run the FastAPI application:
     ```bash
     uvicorn main:app --reload
     ```
 
-5. Access the API at `http://127.0.0.1:8000` and explore the available endpoints.
+6. Access the API at `http://127.0.0.1:8000` and explore the available endpoints.
 
 ## Deployment
 
